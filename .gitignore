@@ -1,0 +1,56 @@
+# Rules based on:
+# - http://help.github.com/git-ignore/
+# - https://github.com/github/gitignore/blob/master/Global/OSX.gitignore
+
+# Mac OS X
+.DS_Store
+
+# Thumbnails (uncomment if actually needed)
+#._*
+
+# External disks (uncomment if actually needed)
+#.Spotlight-V100
+#.Trashes
+
+# It's better to unpack these files and commit the raw source because
+# git has its own built in compression methods.
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.tar.gz
+*.zip
+*.bzip
+
+# Eclipse (uncomment if actually use)
+#*.pydevproject
+#.project
+#.metadata
+#bin/**
+#tmp/**
+#tmp/**/*
+#*.tmp
+#*.bak
+*.swp
+*.swo
+#*~.nib
+#local.properties
+#.classpath
+#.settings/
+#.loadpath
+
+# Mercurial (uncomment if actually use)
+#/.hg/*
+#*/.hg/*
+#.hgignore
+
+# Subversion (uncomment if actually use)
+#.svn/
+
+# TextMate (uncomment if actually use)
+#*.tmproj
+#*.tmproject
+#tmtags

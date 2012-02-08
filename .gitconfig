@@ -1,0 +1,63 @@
+[user]
+	name = Jeremy Smith
+	email = jeremyisatmit@gmail.com
+
+[core]
+  editor = vim
+  autocrlf = input
+  excludesfile = ".gitignore"
+
+[alias]
+  st = status
+  ci = commit
+  cm = commit
+  br = branch
+  co = checkout
+  df = diff
+  dc = diff --cached
+  d2 = diff --cached
+  lg = log -p
+  lgf = log --follow
+  logf = log --follow
+  logp = log -p
+  lol = log --graph --decorate --pretty=oneline --abbrev-commit
+  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  ls = ls-files
+  diff2 = diff --cached
+  discard = checkout --
+  unstage = reset HEAD
+
+[color]
+  ui = auto
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+
+[diff]
+  # use p4merge:
+  tool = p4merge
+  # uncomment out to use p4merge
+  # TEMP HACK to force git diff to also use p4merge:
+  #external = /Applications/p4merge.app/Contents/MacOS/p4merge "$2" "$5" ||
+
+[difftool]
+  prompt = false
+
+[difftool "p4merge"]
+  path = /Applications/p4merge.app/Contents/MacOS/p4merge
+
+[merge]
+  tool = p4merge
+
+[mergetool]
+  prompt = false
+  keepBackup = false
+
+[mergetool "p4merge"]
+  path = /Applications/p4merge.app/Contents/MacOS/p4merge
+  trustExitCode = false
+
+# TODO what does this do? do we really want it?
+#[branch]
+# autosetupmerge = true

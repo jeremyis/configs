@@ -26,6 +26,7 @@
   diff2 = diff --cached
   discard = checkout --
   unstage = reset HEAD
+  dt = difftool --dir-diff
 
 [color]
   ui = auto
@@ -42,7 +43,7 @@
   plain = white
 
 [diff]
-  #tool = diffmerge
+  tool = diffmerge
   #external = diffmerge \"$LOCAL\" \"$REMOTE\"
 
   # use meld (note: git-meld is a bash script on path)

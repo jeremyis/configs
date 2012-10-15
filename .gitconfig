@@ -98,8 +98,5 @@
 [mergetool "deltawalker"]
   cmd = '/Applications/DeltaWalker.app/Contents/MacOS/git-merge' "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
 
-# TODO what does this do? do we really want it?
-#[branch]
-# autosetupmerge = true
-[github]
-	user = jeremyis
+[include]
+  path = .gitcredentials

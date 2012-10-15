@@ -54,19 +54,19 @@ startup_message       off             # default: on
 
 # Set $TERM for new windows. I have more luck with 'linux' than Terminal's
 # default 'xterm-color' (^H problems). Comment out to use the default.
-term                  linux
+#term                  linux
 
 # Tweak termcap, terminfo, and termcapinfo  entries for best performance.
-termcap               linux           'AF=\E[3%dm:AB=\E[4%dm'
-termcap               xterm-color     'AF=\E[3%dm:AB=\E[4%dm'
-terminfo              linux           'AF=\E[3%p1%dm:AB=\E[4%p1%dm'
-terminfo              xterm-color     'AF=\E[3%p1%dm:AB=\E[4%p1%dm'
+#termcap               linux           'AF=\E[3%dm:AB=\E[4%dm'
+#termcap               xterm-color     'AF=\E[3%dm:AB=\E[4%dm'
+#terminfo              linux           'AF=\E[3%p1%dm:AB=\E[4%p1%dm'
+#terminfo              xterm-color     'AF=\E[3%p1%dm:AB=\E[4%p1%dm'
 
 # Allow xterm / Terminal scrollbars to access the scrollback buffer. This
 # enables the behavior you'd expect, instead of losing the content that scrolls
 # out of the window.
-termcapinfo           linux           ti@:te@
-termcapinfo           xterm-color     ti@:te@
+#termcapinfo           linux           ti@:te@
+#termcapinfo           xterm-color     ti@:te@
 
 # Use visual bell instead of audio bell.
 vbell                 on              # default: ???
@@ -76,3 +76,13 @@ vbell_msg             " *beep* "
 
 # set ` to ctrl+a
 escape ``
+
+# terminfo and termcap for nice 256 color terminal
+# allow bold colors - necessary for some reason
+attrcolor b ".I"
+# tell screen how to set colors. AB = background, AF=foreground
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+# erase background with current bg color
+defbce "on"
+# set TERM
+term "screen-256color"

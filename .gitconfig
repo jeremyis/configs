@@ -14,9 +14,9 @@
   br = branch
   co = checkout
   df = diff
-  dc = diff --cached
+  dw = diff --word-diff=color
   d2 = diff --cached
-  lg = log -p
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
   lgf = log --follow
   logf = log --follow
   logp = log -p
@@ -34,30 +34,72 @@
   branch = auto
   interactive = auto
 
+[color "diff"]
+  meta = yellow bold
+  frag = white bold
+  new = green bold
+  old = red bold
+  plain = white
+
 [diff]
+  #tool = diffmerge
+  #external = diffmerge \"$LOCAL\" \"$REMOTE\"
+
+  # use meld (note: git-meld is a bash script on path)
+  #external = git-meld
+  #
   # use p4merge:
-  tool = p4merge
-  # uncomment out to use p4merge
-  # TEMP HACK to force git diff to also use p4merge:
+  #tool = p4merge
   #external = /Applications/p4merge.app/Contents/MacOS/p4merge "$2" "$5" ||
 
+  # use opendiff, which sucks
+  #tool = opendiff
+  #external = /Developer/usr/bin/opendiff "$2" "$5" ||
+
+  #external = "echo"
+  #external = "/Applications/DeltaWalker.app/Contents/MacOS/git-diff"
+
+
+[merge]
+  ff = false
+
 [difftool]
-  prompt = false
+  prompt = true
+
+[difftool "opendiff"]
+  path = /Developer/usr/bin/opendiff
+
+[mergetool "opendiff"]
+  path = /Developer/usr/bin/opendiff
+  trustExitCode = true
 
 [difftool "p4merge"]
   path = /Applications/p4merge.app/Contents/MacOS/p4merge
 
 [merge]
-  tool = p4merge
+  #tool = diffmerge
+  tool = deltawalker
 
 [mergetool]
   prompt = false
-  keepBackup = false
+  keepBackup = true
 
 [mergetool "p4merge"]
   path = /Applications/p4merge.app/Contents/MacOS/p4merge
   trustExitCode = false
 
+[mergetool "diffmerge"]
+  cmd = "diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$(if test -f \"$BASE\"; then echo \"$BASE\"; else echo \"$LOCAL\"; fi)\" \"$REMOTE\""
+  trustExitCode = false
+
+[difftool "diffmerge"]
+  cmd = diffmerge \"$LOCAL\" \"$REMOTE\"
+
+[mergetool "deltawalker"]
+  cmd = '/Applications/DeltaWalker.app/Contents/MacOS/git-merge' "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+
 # TODO what does this do? do we really want it?
 #[branch]
 # autosetupmerge = true
+[github]
+	user = jeremyis

@@ -11,6 +11,10 @@ findnodefn () { find . | grep -i "$1" --color=always | grep -v node_modules;}
 alias grepnode=grepnodefn
 alias findnode=findnodefn
 
+alias runhttp="python -m SimpleHTTPServer"
+alias ls="ls -G"
+alias pinggoogle='~/stuff/scripts/pinggoogle.sh'
+
 VISUAL=vim
 PATH=/usr/local/bin:$PATH
 

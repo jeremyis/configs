@@ -29,9 +29,6 @@ set background=dark " TEMPORARILY DISABLE TO SEE IF CAUSING DRAWING ISSUE
 
 set nowrap
 
-" not sure if we want this
-"set colorscheme default
-
 " highlight lines over 80 length
 " highlight OverLength ctermbg=darkred ctermfg=white guibg=#FFD9D9
 " match OverLength /\%81v.*/
@@ -73,7 +70,6 @@ function! NumberToggle()
     set relativenumber
   endif
 endfunc
-nnoremap <F3> :call NumberToggle()<cr>
 
 " bufexplorer (plugin) config:
 let g:bufExplorerShowRelativePath=1 " Show relative path
@@ -105,8 +101,11 @@ set paste
 nmap <F1> :set number! wrap<CR>
 
 noremap <F2> :syntax sync fromstart<CR>
-inoremap <F2> :syntax sync fromstart<CR<F2>
+inoremap <F2> :syntax sync fromstart<CR><F2>
+nnoremap <F3> :call NumberToggle()<CR>
+cnoremap <F4> :e %:p:h<CR>
 nmap + *N
+nmap , :sp<CR>gd
 
 " Weird vim screen color issue
 set t_Co=256
@@ -118,3 +117,46 @@ set t_Co=256
 " colorscheme ir_black
 "colorscheme kruby
 
+" Disable if python support not present
+if !has('python')
+  let g:pymode = 1
+endif
+
+let g:syntastic_python_checker_args='--rcfile=~/.pylintrc'
+let g:pymode_lint_checker = "pyflakes" " I don't know what this does
+
+if has('statusline')
+    set laststatus=2
+
+    " Broken down into easily includeable segments
+    set statusline=%<%f\    " Filename
+    set statusline+=%w%h%m%r " Options
+    set statusline+=%{fugitive#statusline()} "  Git Hotness
+    set statusline+=\ [%{&ff}/%Y]            " filetype
+    set statusline+=\ [%{getcwd()}]          " current dir
+    set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+endif
+
+set scrolljump=5                " lines to scroll when cursor leaves screen
+set scrolloff=3                 " minimum lines to keep above and below cursor
+set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
+
+"let g:indent_guides_auto_colors = 0
+"hi IndentGuidesOdd  ctermbg=black
+"hi IndentGuidesEven ctermbg=darkgrey
+
+colorscheme slate
+"let g:indent_guides_auto_colors = 0
+hi IndentGuidesOdd  guibg=dimgray   ctermbg=3
+hi IndentGuidesEven guibg=slategray ctermbg=4
+
+" Enable vim-indent-guides by default
+let g:indent_guides_enable_on_vim_startup = 1
+
+"let g:syntastic_check_on_open=1
+"let g:syntastic_echo_current_error=1
+"let g:syntastic_mode_map = { 'mode': 'active',
+"                           \ 'active_filetypes': ['ruby', 'php', 'python'],
+"                          \ 'passive_filetypes': ['puppet'] }
+"let g:syntastic_enable_signs=1
+"let g:syntastic_enable_highlighting =1

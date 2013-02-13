@@ -103,7 +103,7 @@ nmap <F1> :set number! wrap<CR>
 noremap <F2> :syntax sync fromstart<CR>
 inoremap <F2> :syntax sync fromstart<CR><F2>
 nnoremap <F3> :call NumberToggle()<CR>
-cnoremap <F4> :e %:p:h<CR>
+nnoremap <F4> :e %:p:h<CR>
 nmap + *N
 nmap , :sp<CR>gd
 

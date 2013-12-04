@@ -36,8 +36,17 @@ call pathogen#infect()
 syntax on
 filetype plugin indent on
 
-" remove trailing whitespace on save
-autocmd BufWritePre * :%s/\s\+$//e
+augroup main_autogroups
+  autocmd!
+  " remove trailing whitespace on save
+  autocmd BufWritePre * :%s/\s\+$//e
+
+  " automatically reload vimrc when it's saved
+  au BufWritePost .vimrc so ~/.vimrc
+
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gre11 ctermbg=234
+  autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=gre82 ctermbg=236
+augroup END
 
 " Syntax coloring
 syntax on
@@ -56,11 +65,12 @@ filetype plugin on
 if exists('+colorcolumn')
   set colorcolumn=80
 else
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+  augroup 80_chars
+  autocmd!
+    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+  augroup END
 endif
 
-" automatically reload vimrc when it's saved
-au BufWritePost .vimrc so ~/.vimrc
 
 " toggle between relative and absolute line numbers -http://vimbits.com/bits/40
 function! NumberToggle()
@@ -81,8 +91,6 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 " For this awesome plugin:https://github.com/nathanaelkane/vim-indent-guides
 let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gre11 ctermbg=234
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=gre82 ctermbg=236
 
 set paste
 
@@ -98,6 +106,8 @@ set paste
 
 " To get a buffer for text manipulation and easy copy/paste,
 " use F1
+let mapleader = ","
+let maplocalleader = "\\"
 nnoremap <F1> :set number! wrap<CR>
 
 noremap <F2> :syntax sync fromstart<CR>
@@ -105,7 +115,10 @@ inoremap <F2> :syntax sync fromstart<CR><F2>
 "nnoremap <F3> :call NumberToggle()<CR>
 nnoremap <F4> :e %:p:h<CR>
 nnoremap + *N
-nnoremap , :sp<CR>gd
+nnoremap <leader><leader> :sp<CR>gd
+
+nnoremap <leader>rc :split $MYVIMRC<cr>
+nnoremap <leader>sr :source $MYVIMRC<cr>
 
 " Weird vim screen color issue
 set t_Co=256
@@ -152,6 +165,8 @@ hi IndentGuidesEven guibg=slategray ctermbg=4
 
 " Enable vim-indent-guides by default
 let g:indent_guides_enable_on_vim_startup = 1
+
+set nofoldenable    " disable folding
 
 "let g:syntastic_check_on_open=1
 "let g:syntastic_echo_current_error=1

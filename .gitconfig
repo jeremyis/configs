@@ -8,7 +8,7 @@
   excludesfile = ".gitignore"
 
 [alias]
-  st = status
+  st = status -sb
   ci = commit
   cm = commit
   br = branch
@@ -16,17 +16,23 @@
   df = diff
   dw = diff --word-diff=color
   d2 = diff --cached
-  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cred(%ai) %C(bold blue)<%an>%Creset' --abbrev-commit --
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset - %C(bold blue)<%an>%Creset %Cgreen(%cr) %C(yellow)%d%Creset %s %Cred(%ai) ' --abbrev-commit --
   lgf = log --follow
   logf = log --follow
   logp = log -p
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  lola2 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold yellow)%d%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold white)%s%C(reset) %C(white)- %an%C(reset)' --all
   ls = ls-files
   diff2 = diff --cached
   discard = checkout --
   unstage = reset HEAD
-  dt = difftool --dir-diff
+  dt = difftool
+  ready = rebase -i @{u}
+  standup = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cD) %C(bold blue)<%an>%Creset' --since yesterday
+  purr = pull --rebase
+  sf = show --pretty="format:" --name-only
+
 
 [color]
   ui = auto
@@ -43,7 +49,8 @@
   plain = white
 
 [diff]
-  tool = diffmerge
+	tool = Kaleidoscope
+	algorithm = patience
   #external = diffmerge \"$LOCAL\" \"$REMOTE\"
 
   # use meld (note: git-meld is a bash script on path)
@@ -61,11 +68,8 @@
   #external = "/Applications/DeltaWalker.app/Contents/MacOS/git-diff"
 
 
-[merge]
-  ff = false
-
 [difftool]
-  prompt = true
+	prompt = false
 
 [difftool "opendiff"]
   path = /Developer/usr/bin/opendiff
@@ -79,10 +83,10 @@
 
 [merge]
   #tool = diffmerge
-  tool = deltawalker
+	tool = Kaleidoscope
 
 [mergetool]
-  prompt = false
+	prompt = false
   keepBackup = true
 
 [mergetool "p4merge"]
@@ -101,3 +105,11 @@
 
 [include]
   path = .gitcredentials
+
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
+[pager]
+	status = true

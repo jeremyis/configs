@@ -42,7 +42,7 @@ set hlsearch
 set backspace=indent,eol,start
 set autoindent
 
-colorscheme default
+colorscheme slate
 set background=dark
 
 set nowrap
@@ -90,6 +90,15 @@ let indent_guides_color_change_percent = 10
 let indent_guides_guide_size = 2
 let g:indent_guides_enable_on_vim_startup = 1
 
+" bufexplorer (plugin) config:
+"let g:bufExplorerShowRelativePath=1 " Show relative path
+"let g:bufExplorerSplitOutPathName=0 " Show path name as part of file
+"let g:bufExplorerSortBy='fullpath' " Sort by full file name
+
+" Weird vim screen color issue
+set t_Co=256
+
+
 """ CUSTOM MACROS """
 " Open definition of focused item in split window
 " TODO: make these work
@@ -99,6 +108,7 @@ let g:indent_guides_enable_on_vim_startup = 1
 
 " To get a buffer for text manipulation and easy copy/paste,
 " use F1
+let mapleader = ","
 let maplocalleader = "\\"
 nnoremap <F1> :set number! wrap<CR>
 

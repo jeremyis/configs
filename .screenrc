@@ -14,7 +14,9 @@ bell_msg              "bell     in %n (%t) [%w:%s]~"
 
 # This command controls the display of the window captions. Normally a caption
 # is only used if more than one window is shown on the display.
-caption               always          "%{= kw}%?%-Lw%?%{+b kw}%n*%t%f %?(%u)%?%{= kw}%?%+Lw%?"
+#caption               always          "%{= kw}%?%-Lw%?%{+b kw}%n*%t%f %?(%u)%?%{= kw}%?%+Lw%?"
+caption always "%{= KW} %-Lw%{= bW}%n%f %t%{-}%+Lw"
+
 
 # Select line break behavior for copying.
 crlf                  off             # default: off
@@ -34,6 +36,7 @@ hardcopy_append       on              # default: off
 # hardstatus. Prepending the word 'always' will force screen to use the type
 # even if the terminal supports a hardstatus line.
 hardstatus            alwayslastline  "%{+b kr}[ %H ] %{ky} Load: %l %-=%{kb} %c  %Y.%m.%d"
+
 msgwait               15
 
 # Set message displayed on pow_detach (when HUP is sent to screen's parent
@@ -86,3 +89,16 @@ termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 defbce "on"
 # set TERM
 term "screen-256color"
+
+# Select  screens 10->19
+bind  ) select 10
+bind  ! select 11
+bind  @ select 12
+bind \# select 13
+bind  $ select 14
+bind  % select 15
+bind \^ select 16
+bind  & select 17
+bind  * select 18
+bind  ( select 19
+

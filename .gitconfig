@@ -5,7 +5,7 @@
 [core]
   editor = vim
   autocrlf = input
-  excludesfile = ".gitignore"
+  excludesfile = ~/.gitignore
 
 [alias]
   st = status -sb
@@ -22,7 +22,7 @@
   logp = log -p
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
-  lola2 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold yellow)%d%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold white)%s%C(reset) %C(white)- %an%C(reset)' --all
+  lola2 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold yellow)%d%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold white)%an%C(reset) %C(bold red)%s%C(reset) ' --all
   ls = ls-files
   diff2 = diff --cached
   discard = checkout --
@@ -32,6 +32,7 @@
   standup = log --pretty=format:'%Cred%h%Creset -%Creset %s %Cgreen(%cD) %C(bold blue)<%an>%Creset' --since yesterday
   purr = pull --rebase
   sf = show --pretty="format:" --name-only
+  sh = show
 
 
 [color]

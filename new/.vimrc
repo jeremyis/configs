@@ -46,10 +46,11 @@ colorscheme slate
 set background=dark
 
 set nowrap
-syntax on
+syntax on " Syntax coloring
 filetype plugin indent on
 
-syntax on " Syntax coloring
+" Google App Scripts .gs files are javascript-like.
+au BufRead,BufNewFile *.gs setfiletype javascript
 
 set backupdir=/tmp
 set directory=/tmp

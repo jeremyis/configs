@@ -50,7 +50,7 @@ syntax on " Syntax coloring
 filetype plugin indent on
 
 " Google App Scripts .gs files are javascript-like.
-au BufRead,BufNewFile *.gs setfiletype javascript
+au BufRead,BufNewFile *.gs set syntax=javascript
 
 set backupdir=/tmp
 set directory=/tmp

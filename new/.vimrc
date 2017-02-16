@@ -119,5 +119,65 @@ nnoremap <F4> :e %:p:h<CR>
 nnoremap + *N
 nnoremap <leader><leader> :sp<CR>gd
 
-nnoremap <leader>rc :split $MYVIMRC<cr>
-nnoremap <leader>sr :source $MYVIMRC<cr>
+nnoremap <leader>ev :split $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" Copy current buffer's file path to clipboard
+nnoremap <leader>fp :let @+ = expand("%:p")<cr>
+
+" Copy current files directory to clipboard
+nnoremap <leader>dp :let @+ = expand("%:p:h")<cr>
+
+" swap this line up
+noremap <leader>- ddp
+
+" swap this line with one above it
+noremap <ledaer>_ ddkkp
+
+source /Users/jeremy_smith/.vimrc-airbnb
+
+""" Experimental: """
+
+Plugin 'vim-ruby/vim-ruby'
+
+"http://vim.wikia.com/wiki/Bookmark_files
+function! MoshBookmark()
+  redir >> ~/.vims
+  echo
+  "echo strftime("%Y-%b-%d %a %H:%M")
+  "echo "cd ". $PWD
+  echo expand("%:p").':'.line('.')
+  "echo ' word='.expand("<cword>")
+  "echo ' cline='.getline('.')
+  redir END
+endfunction
+":command! MoshBookmark :call MoshBookmark()
+nnoremap <leader>m :call MoshBookmark()<cr>
+
+" See local buffer diffs
+nnoremap <leader>di :w !diff % -<cr>
+
+" Make vim interactive: http://stackoverflow.com/questions/4642822/commands-executed-from-vim-are-not-recognizing-bash-command-aliases
+set shellcmdflag=-ic
+
+" folding
+"setlocal foldmethod=indent
+hi Folded ctermbg=59
+
+" TODO: add markers http://learnvimscriptthehardway.stevelosh.com/chapters/18.html
+" Configure statusline
+" TODO: add pretty colors
+" TODO: maybe use https://github.com/powerline/powerline
+
+set laststatus=2  " always show status line
+
+set statusline=%n
+set statusline+=\ %.40f
+set statusline+=\ %m\ %r
+
+set statusline+=%=
+set statusline+=\c\:%02v " Current col
+set statusline+=\ %4l    " Current line
+set statusline+=/        "    Separator
+set statusline+=%-4L     " Total lines
+set statusline+=\ %2p%%

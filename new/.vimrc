@@ -13,11 +13,12 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'lchi/vim-toffee'
 Plugin 'groenewege/vim-less'
 Plugin 'nathanaelkane/vim-indent-guides'
-
+Plugin 'airblade/vim-gitgutter' " Show git diff next to line numbers
+Plugin 'jlanzarotta/bufexplorer'
+" Airbnb recommendations: https://airbnb.quip.com/4YpKA9O2CgWJ
 " All of your Vundle Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-
 
 set encoding=utf-8
 set expandtab tabstop=2 shiftwidth=2 softtabstop=2
@@ -64,7 +65,7 @@ filetype plugin on
 
 " 80 line character coloring - http://vimbits.com/bits/13
 if exists('+colorcolumn')
-  set colorcolumn=80
+  set colorcolumn=100
 else
   augroup 80_chars
   autocmd!
@@ -74,7 +75,6 @@ endif
 
 " Ignore searches with ctrl+p
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-j
 set paste
 
 " Remove trailing white space on save.
@@ -85,8 +85,8 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 
 " Indent guides. https://github.com/nathanaelkane/vim-indent-guides
 let indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=darkgrey   ctermbg=234
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=lightgray  ctermbg=235
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=darkgrey   ctermbg=236
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=lightgray  ctermbg=234
 let indent_guides_color_change_percent = 10
 let indent_guides_guide_size = 2
 let g:indent_guides_enable_on_vim_startup = 1
@@ -109,7 +109,6 @@ set t_Co=256
 
 " To get a buffer for text manipulation and easy copy/paste,
 " use F1
-let mapleader = ","
 let maplocalleader = "\\"
 nnoremap <F1> :set number! wrap<CR>
 

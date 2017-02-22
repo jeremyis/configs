@@ -127,6 +127,9 @@ nnoremap <leader>fp :let @+ = expand("%:p")<cr>
 " Copy current files directory to clipboard
 nnoremap <leader>dp :let @+ = expand("%:p:h")<cr>
 
+" Copy content of main reigster to clipboard
+nnoremap <leader>cp :let @+ = @"<cr>
+
 " swap this line up
 noremap <leader>- ddp
 

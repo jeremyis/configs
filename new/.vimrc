@@ -167,6 +167,23 @@ set shellcmdflag=-ic
 hi Folded ctermbg=59
 
 " TODO: add markers http://learnvimscriptthehardway.stevelosh.com/chapters/18.html
+
+
+" Macro to add visual mode text to clipboard
+" http://stackoverflow.com/questions/1533565/how-to-get-visually-selected-text-in-vimscript
+function! Get_visual_selection()
+  " Why is this not a built-in Vim script function?!
+  let [lnum1, col1] = getpos("'<")[1:2]
+  let [lnum2, col2] = getpos("'>")[1:2]
+  let lines = getline(lnum1, lnum2)
+  let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][col1 - 1:]
+  return join(lines, "\n")
+endfunction
+
+vnoremap <leader>cp :<c-u>let @+ = Get_visual_selection()<cr>
+
+
 " Configure statusline
 " TODO: add pretty colors
 " TODO: maybe use https://github.com/powerline/powerline

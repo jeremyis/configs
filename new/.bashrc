@@ -40,3 +40,59 @@ alias vi="vim"
 # Fix terminal Ctrl-S / Ctrl-Q with VIM
 # http://stackoverflow.com/questions/13648237/ctrls-horizontal-split-not-working-with-command-t-in-vim
 stty start undef stop undef
+
+function colorgrid( )
+{
+    iter=16
+    while [ $iter -lt 52 ]
+    do
+        second=$[$iter+36]
+        third=$[$second+36]
+        four=$[$third+36]
+        five=$[$four+36]
+        six=$[$five+36]
+        seven=$[$six+36]
+        if [ $seven -gt 250 ];then seven=$[$seven-251]; fi
+
+        echo -en "\033[38;5;$(echo $iter)m█ "
+        printf "%03d" $iter
+        echo -en "   \033[38;5;$(echo $second)m█ "
+        printf "%03d" $second
+        echo -en "   \033[38;5;$(echo $third)m█ "
+        printf "%03d" $third
+        echo -en "   \033[38;5;$(echo $four)m█ "
+        printf "%03d" $four
+        echo -en "   \033[38;5;$(echo $five)m█ "
+        printf "%03d" $five
+        echo -en "   \033[38;5;$(echo $six)m█ "
+        printf "%03d" $six
+        echo -en "   \033[38;5;$(echo $seven)m█ "
+        printf "%03d" $seven
+
+        iter=$[$iter+1]
+        printf '\r\n'
+    done
+}
+
+function config_ps1() {
+  export reset='\033[m'
+  if [ "$USER" = "jeremy_smith" ]; then
+      j="\[\033[01;38;5;52m\]j"
+      e="\[\033[01;38;5;124m\]e"
+      r="\[\033[01;38;5;196m\]r"
+      e2="\[\033[01;38;5;202m\]e"
+      m="\[\033[01;38;5;208m\]m"
+      y="\[\033[01;38;5;214m\]y"
+      local __user="$j$e$r$e2$m$y$reset"
+  else
+      local __user="\[\033[01;36m\]\u$reset"
+  fi
+
+  export limegreen='\[\e[0;32m\]'
+  export red='\[\e[1;31m\]'
+  export blue='\[\e[0;34m\]'
+  export PS1="$limegreen\t$reset $blue\h$reset:$red\w$reset $__user\\\\$ "
+}
+
+config_ps1
+

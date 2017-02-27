@@ -164,7 +164,9 @@ nnoremap <leader>di :w !diff % -<cr>
 set shellcmdflag=-ic
 
 " folding
-"setlocal foldmethod=indent
+" TODO: toggle for enable folding http://learnvimscriptthehardway.stevelosh.com/chapters/38.html
+"set foldmethod=indent
+"set foldcolumn=1
 hi Folded ctermbg=59
 
 " TODO: add markers http://learnvimscriptthehardway.stevelosh.com/chapters/18.html

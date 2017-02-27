@@ -15,6 +15,7 @@ Plugin 'groenewege/vim-less'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'airblade/vim-gitgutter' " Show git diff next to line numbers
 Plugin 'jlanzarotta/bufexplorer'
+Plugin 'vim-scripts/taglist.vim' " For exploring file based on tags
 " Airbnb recommendations: https://airbnb.quip.com/4YpKA9O2CgWJ
 " All of your Vundle Plugins must be added before the following line
 call vundle#end()            " required
@@ -90,6 +91,8 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=lightgray  ctermbg=234
 let indent_guides_color_change_percent = 10
 let indent_guides_guide_size = 2
 let g:indent_guides_enable_on_vim_startup = 1
+
+let Tlist_Use_Right_Window=1 "Put taglist plugin on right side
 
 " bufexplorer (plugin) config:
 "let g:bufExplorerShowRelativePath=1 " Show relative path
@@ -200,3 +203,5 @@ set statusline+=\ %4l    " Current line
 set statusline+=/        "    Separator
 set statusline+=%-4L     " Total lines
 set statusline+=\ %2p%%
+" Open Taglist plugin
+nnoremap <silent> <F8> :TlistToggle<CR>

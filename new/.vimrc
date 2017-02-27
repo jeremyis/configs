@@ -194,7 +194,7 @@ vnoremap <leader>cp :<c-u>let @+ = Get_visual_selection()<cr>
 set laststatus=2  " always show status line
 
 set statusline=%n
-set statusline+=\ %.40f
+set statusline+=\ %.70f
 set statusline+=\ %m\ %r
 
 set statusline+=%=
@@ -203,5 +203,20 @@ set statusline+=\ %4l    " Current line
 set statusline+=/        "    Separator
 set statusline+=%-4L     " Total lines
 set statusline+=\ %2p%%
+
+
+" ctrl p
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+
+" See http://stackoverflow.com/a/22784889
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+" Tags
+map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
 " Open Taglist plugin
 nnoremap <silent> <F8> :TlistToggle<CR>

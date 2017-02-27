@@ -82,7 +82,7 @@ function colorgrid( )
 
 
 function config_ps1() {
-  export reset='\033[m'
+  export reset='\[\033[m\]'
   if [ "$USER" = "jeremy_smith" ]; then
     j="\[\033[01;38;5;196m\]j"
     e="\[\033[01;38;5;202m\]e"

@@ -143,8 +143,6 @@ source /Users/jeremy_smith/.vimrc-airbnb
 
 """ Experimental: """
 
-Plugin 'vim-ruby/vim-ruby'
-
 "http://vim.wikia.com/wiki/Bookmark_files
 function! MoshBookmark()
   redir >> ~/.vims

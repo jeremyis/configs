@@ -41,6 +41,11 @@ alias vi="vim"
 # http://stackoverflow.com/questions/13648237/ctrls-horizontal-split-not-working-with-command-t-in-vim
 stty start undef stop undef
 
+# git auto complete: https://github.com/bobthecow/git-flow-completion/wiki/Install-Bash-git-completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+
 # http://unix.stackexchange.com/a/285956
 function colorgrid( )
 {

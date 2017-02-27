@@ -68,9 +68,9 @@ filetype plugin on
 if exists('+colorcolumn')
   set colorcolumn=100
 else
-  augroup 80_chars
+  augroup 100_chars
   autocmd!
-    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
   augroup END
 endif
 

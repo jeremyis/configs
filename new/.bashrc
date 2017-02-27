@@ -41,6 +41,7 @@ alias vi="vim"
 # http://stackoverflow.com/questions/13648237/ctrls-horizontal-split-not-working-with-command-t-in-vim
 stty start undef stop undef
 
+# http://unix.stackexchange.com/a/285956
 function colorgrid( )
 {
     iter=16
@@ -74,15 +75,17 @@ function colorgrid( )
     done
 }
 
+
 function config_ps1() {
   export reset='\033[m'
   if [ "$USER" = "jeremy_smith" ]; then
-      j="\[\033[01;38;5;52m\]j"
-      e="\[\033[01;38;5;124m\]e"
-      r="\[\033[01;38;5;196m\]r"
-      e2="\[\033[01;38;5;202m\]e"
-      m="\[\033[01;38;5;208m\]m"
-      y="\[\033[01;38;5;214m\]y"
+    j="\[\033[01;38;5;196m\]j"
+    e="\[\033[01;38;5;202m\]e"
+    r="\[\033[01;38;5;208m\]r"
+    e2="\[\033[01;38;5;214m\]e"
+    m="\[\033[01;38;5;226m\]m"
+    y="\[\033[01;38;5;228m\]y"
+
       local __user="$j$e$r$e2$m$y$reset"
   else
       local __user="\[\033[01;36m\]\u$reset"
@@ -91,7 +94,8 @@ function config_ps1() {
   export limegreen='\[\e[0;32m\]'
   export red='\[\e[1;31m\]'
   export blue='\[\e[0;34m\]'
-  export PS1="$limegreen\t$reset $blue\h$reset:$red\w$reset $__user\\\\$ "
+  export promptcolor="\[\033[01;38;5;220m\]"
+  export PS1="$limegreen\t$reset $blue\h$reset:$red\w$reset $__user$promptcolor\$$reset "
 }
 
 config_ps1

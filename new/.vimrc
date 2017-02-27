@@ -16,7 +16,7 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'airblade/vim-gitgutter' " Show git diff next to line numbers
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'vim-scripts/taglist.vim' " For exploring file based on tags
-" Airbnb recommendations: https://airbnb.quip.com/4YpKA9O2CgWJ
+
 " All of your Vundle Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required

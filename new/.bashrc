@@ -35,7 +35,14 @@ alias ll="ls -l"
 export PATH=$PATH:/usr/local/sbin
 
 # So vi calls the correct vim (not necessarily /usr/bin/vim)
-alias vi="vim"
+#alias vi="vim"
+function vi() {
+    if [ $# -eq 0 ]; then
+        vim ~/.vims
+    else
+        vim $@
+    fi
+}
 
 # Fix terminal Ctrl-S / Ctrl-Q with VIM
 # http://stackoverflow.com/questions/13648237/ctrls-horizontal-split-not-working-with-command-t-in-vim

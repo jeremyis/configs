@@ -51,6 +51,15 @@ set nowrap
 syntax on " Syntax coloring
 filetype plugin indent on
 
+" Fix aggressive markdown syntax highlighting
+autocmd FileType markdown |
+      \hi def link markdownItalic              NONE |
+      \hi def link markdownItalicDelimiter     NONE |
+      \hi def link markdownBold                NONE |
+      \hi def link markdownBoldDelimiter       NONE |
+      \hi def link markdownBoldItalic          NONE |
+      \hi def link markdownBoldItalicDelimiter NONE
+
 " Google App Scripts .gs files are javascript-like.
 au BufRead,BufNewFile *.gs set syntax=javascript
 
@@ -115,7 +124,7 @@ set t_Co=256
 let maplocalleader = "\\"
 nnoremap <F1> :set number! wrap<CR>
 
-inoremap <F2> :syntax sync fromstart<CR><F2>
+nnoremap <F2> :syntax sync fromstart<CR>
 "nnoremap <F3> :call NumberToggle()<CR>
 nnoremap <F4> :e %:p:h<CR>
 nnoremap + *N
@@ -133,13 +142,19 @@ nnoremap <leader>dp :let @+ = expand("%:p:h")<cr>
 " Copy content of main reigster to clipboard
 nnoremap <leader>cp :let @+ = @"<cr>
 
+" Change working directory to directory of current file
+nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
+
 " swap this line up
 noremap <leader>- ddp
 
 " swap this line with one above it
 noremap <ledaer>_ ddkkp
 
-source /Users/jeremy_smith/.vimrc-airbnb
+if filereadable("~/.vimrc-private")
+  source ~/.vimrc-private
+endif
+
 
 """ Experimental: """
 
@@ -156,6 +171,7 @@ function! MoshBookmark()
 endfunction
 ":command! MoshBookmark :call MoshBookmark()
 nnoremap <leader>m :call MoshBookmark()<cr>
+nnoremap <leader>sm :e ~/.vims<cr>
 
 " See local buffer diffs
 nnoremap <leader>di :w !diff % -<cr>
@@ -220,3 +236,4 @@ map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Open Taglist plugin
 nnoremap <silent> <F8> :TlistToggle<CR>
+

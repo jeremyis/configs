@@ -4,8 +4,10 @@ set -o vi
 # Aliases
 grepnodefn () { grep -rnIi "$1" * --color=always | grep -v node_modules; }
 findnodefn () { find . | grep -i "$1" --color=always | grep -v node_modules;}
+function grepr() { grep -rI "$1" * --color=always; }
 alias grepnode=grepnodefn
 alias findnode=findnodefn
+alias grepr=grepr
 
 greprubyfn () { grep -rIn --include \*.rb --color=always "$1" *; }
 alias grepruby=greprubyfn
@@ -14,6 +16,10 @@ alias grepruby=greprubyfn
 # Counts blamed lines by authors on file.
 gitauthorsfn () { git ls-tree -r -z --name-only HEAD -- $1 | xargs -0 -n1 git blame --line-porcelain HEAD | grep  "^author "|sort|uniq -c|sort -nr; }
 alias git-authors=gitauthorsfn
+
+# Removes local branches that are merged and prunes any tracking branches
+gitcleanupfn () { git checkout master  && git branch --merged | grep -v master | xargs git branch -d && git remote prune origin; }
+alias git-cleanup=gitcleanupfn
 
 # Exports
 export NODE_ENV='development'

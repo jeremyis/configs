@@ -15,7 +15,7 @@
   co = checkout
   df = diff
   dw = diff --word-diff=color
-  d2 = diff --cached
+  dc = diff --cached
   lg = log --color --graph --pretty=format:'%Cred%h%Creset - %C(bold blue)<%an>%Creset %Cgreen(%cr) %C(yellow)%d%Creset %s %Cred(%ai) ' --abbrev-commit --
   lgf = log --follow
   logf = log --follow
@@ -33,6 +33,9 @@
   purr = pull --rebase
   sf = show --pretty="format:" --name-only
   sh = show
+  mine = log --author='jeremy.smith' -n 5
+  files = diff-tree --no-commit-id --name-only -r
+
 
 
 [color]
@@ -50,8 +53,8 @@
   plain = white
 
 [diff]
-	tool = Kaleidoscope
-	algorithm = patience
+  tool = Kaleidoscope
+  algorithm = patience
   #external = diffmerge \"$LOCAL\" \"$REMOTE\"
 
   # use meld (note: git-meld is a bash script on path)
@@ -70,7 +73,7 @@
 
 
 [difftool]
-	prompt = false
+  prompt = false
 
 [difftool "opendiff"]
   path = /Developer/usr/bin/opendiff
@@ -84,10 +87,10 @@
 
 [merge]
   #tool = diffmerge
-	tool = Kaleidoscope
+  tool = Kaleidoscope
 
 [mergetool]
-	prompt = false
+  prompt = false
   keepBackup = true
 
 [mergetool "p4merge"]
@@ -108,9 +111,9 @@
   path = .gitcredentials
 
 [difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
+  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+  trustExitCode = true
 [pager]
-	status = true
+  status = true

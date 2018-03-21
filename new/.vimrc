@@ -15,13 +15,15 @@ Plugin 'groenewege/vim-less'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'airblade/vim-gitgutter' " Show git diff next to line numbers
 Plugin 'jlanzarotta/bufexplorer'
-Plugin 'vim-scripts/taglist.vim' " For exploring file based on tags
+Plugin 'vim-scripts/taglist.vim' " For seeing file summary panel from tags
+Plugin 'solarnz/thrift.vim' " Syntax for thrift
 
 " All of your Vundle Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 set encoding=utf-8
+set paste " must be set before expandtab
 set expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 set number
@@ -44,11 +46,39 @@ set hlsearch
 set backspace=indent,eol,start
 set autoindent
 
+"******* Colors ***********
+set t_Co=256 " Weird vim screen color issue
+
+" Indent guides. https://github.com/nathanaelkane/vim-indent-guides
+let indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=darkgrey   ctermbg=236
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=lightgray  ctermbg=234
+let indent_guides_color_change_percent = 10
+let indent_guides_guide_size = 2
+let g:indent_guides_enable_on_vim_startup = 1
+
+" 80 line character coloring - http://vimbits.com/bits/13
+if exists('+colorcolumn')
+  set colorcolumn=100
+else
+  augroup 100_chars
+  autocmd!
+    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
+  augroup END
+endif
+
 colorscheme slate
 set background=dark
+syntax on " Syntax coloring - MUST come before highlight color
+
+" use custom search highlight color
+hi Search cterm=NONE ctermfg=grey ctermbg=Magenta
+hi IncSearch cterm=NONE ctermfg=grey ctermbg=Magenta
+
+"******* END OF Colors ***********
+
 
 set nowrap
-syntax on " Syntax coloring
 filetype plugin indent on
 
 " Fix aggressive markdown syntax highlighting
@@ -73,19 +103,8 @@ set hidden
 
 filetype plugin on
 
-" 80 line character coloring - http://vimbits.com/bits/13
-if exists('+colorcolumn')
-  set colorcolumn=100
-else
-  augroup 100_chars
-  autocmd!
-    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
-  augroup END
-endif
-
 " Ignore searches with ctrl+p
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-set paste
 
 " Remove trailing white space on save.
 autocmd BufWritePre * :%s/\s\+$//e
@@ -93,23 +112,18 @@ autocmd BufWritePre * :%s/\s\+$//e
 " Autowrap for git commits.
 autocmd Filetype gitcommit setlocal spell textwidth=72
 
-" Indent guides. https://github.com/nathanaelkane/vim-indent-guides
-let indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=darkgrey   ctermbg=236
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=lightgray  ctermbg=234
-let indent_guides_color_change_percent = 10
-let indent_guides_guide_size = 2
-let g:indent_guides_enable_on_vim_startup = 1
-
 let Tlist_Use_Right_Window=1 "Put taglist plugin on right side
+let Tlist_Compact_Format=1
 
 " bufexplorer (plugin) config:
 "let g:bufExplorerShowRelativePath=1 " Show relative path
 "let g:bufExplorerSplitOutPathName=0 " Show path name as part of file
 "let g:bufExplorerSortBy='fullpath' " Sort by full file name
+let g:bufExplorerSortBy='mru'
+let g:bufExplorerShowRelativePath=1
+let g:bufExplorerSplitOutPathName=0
+let g:bufExplorerShowDirectories=0
 
-" Weird vim screen color issue
-set t_Co=256
 
 
 """ CUSTOM MACROS """
@@ -151,8 +165,9 @@ noremap <leader>- ddp
 " swap this line with one above it
 noremap <ledaer>_ ddkkp
 
-if filereadable("~/.vimrc-private")
-  source ~/.vimrc-private
+let g:private_vimrc_path = fnamemodify(expand("$MYVIMRC"), ":p:h") . '/.vimrc-private'
+if filereadable(g:private_vimrc_path)
+  execute 'source '. g:private_vimrc_path
 endif
 
 
@@ -236,4 +251,3 @@ map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Open Taglist plugin
 nnoremap <silent> <F8> :TlistToggle<CR>
-

@@ -35,7 +35,7 @@ hardcopy_append       on              # default: off
 # line. The type 'lastline' will reserve the last line of the display for the
 # hardstatus. Prepending the word 'always' will force screen to use the type
 # even if the terminal supports a hardstatus line.
-hardstatus            alwayslastline  "%{+b kr}[ %H ] %{ky} Load: %l %-=%{kb} %c  %Y.%m.%d"
+hardstatus            alwayslastline  "%{+b kg}( %S ) %{+b kr}[ %H ] %{ky} Load: %l %-=%{kb} %c  %Y.%m.%d"
 
 msgwait               15
 
@@ -101,4 +101,5 @@ bind \^ select 16
 bind  & select 17
 bind  * select 18
 bind  ( select 19
+
 

@@ -1,11 +1,20 @@
 [user]
-	name = Jeremy Smith
-	email = jeremyisatmit@gmail.com
+  name = Jeremy Smith
+  mail = jeremy.smith@airbnb.com
+  email = jeremy.smith@airbnb.com
 
 [core]
   editor = vim
   autocrlf = input
-  excludesfile = ~/.gitignore
+	precomposeunicode = true
+  excludesfile = /Users/jeremy_smith/.gitignore_global
+	sparseCheckout = true
+
+[rerere]
+	enabled = true
+
+[push]
+	default = current
 
 [alias]
   st = status -sb

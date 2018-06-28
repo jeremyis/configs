@@ -40,6 +40,14 @@ alias ll="ls -l"
 
 export PATH=$PATH:/usr/local/sbin
 
+# Added by GraphLab Create Launcher v3.0.1
+export PATH="/Users/jeremy_smith/anaconda/bin:$PATH"
+
+# Golang
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=/Users/jeremy_smith/go
+export GOBIN=$GOPATH/bin
+
 # So vi calls the correct vim (not necessarily /usr/bin/vim)
 #alias vi="vim"
 function vi() {
@@ -117,4 +125,3 @@ function config_ps1() {
 }
 
 config_ps1
-

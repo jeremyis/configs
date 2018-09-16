@@ -21,6 +21,10 @@ alias git-authors=gitauthorsfn
 gitcleanupfn () { git checkout master  && git branch --merged | grep -v master | xargs git branch -d && git remote prune origin; }
 alias git-cleanup=gitcleanupfn
 
+# Requires core-utils brew install coreutils
+fullfilepathfn () { greadlink -f $1; }
+alias fp=fullfilepathfn
+
 # Exports
 export NODE_ENV='development'
 export PHP_ENV='development'

@@ -22,7 +22,7 @@ gitcleanupfn () { git checkout master  && git branch --merged | grep -v master |
 alias git-cleanup=gitcleanupfn
 
 # Requires core-utils brew install coreutils
-fullfilepathfn () { greadlink -f $1; }
+fullfilepathfn () { greadlink -f $1 | pbcopy; }
 alias fp=fullfilepathfn
 
 # Exports

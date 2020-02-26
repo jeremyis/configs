@@ -1,7 +1,7 @@
 [user]
   name = Jeremy Smith
-  mail = jeremy.smith@airbnb.com
-  email = jeremy.smith@airbnb.com
+  mail = [FILL IN]
+  email = [FILL IN]
 
 [core]
   editor = vim

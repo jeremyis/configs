@@ -17,6 +17,14 @@ Plugin 'airblade/vim-gitgutter' " Show git diff next to line numbers
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'vim-scripts/taglist.vim' " For seeing file summary panel from tags
 Plugin 'solarnz/thrift.vim' " Syntax for thrift
+Plugin 'leafgarland/typescript-vim.git'
+Plugin 'w0rp/ale'
+
+" Colorscheme rejects:
+"Plugin 'changyuheng/color-scheme-holokai-for-vim'
+" Plugin 'joshdick/onedark.vim'
+" Plugin 'sickill/vim-monokai'
+Plugin 'dracula/vim', { 'name': 'dracula' }
 
 " All of your Vundle Plugins must be added before the following line
 call vundle#end()            " required
@@ -25,6 +33,7 @@ filetype plugin indent on    " required
 set encoding=utf-8
 set paste " must be set before expandtab
 set expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType python setlocal expandtab shiftwidth=2 softtabstop=2
 
 set number
 set ruler " show current position at all times
@@ -41,6 +50,7 @@ set incsearch
 set ignorecase " searches are case insensitive
 set smartcase "...unless they contain at least 1 capital letter
 set hlsearch
+set wrapscan
 
 set backspace=indent,eol,start
 set autoindent
@@ -70,12 +80,14 @@ colorscheme slate
 set background=dark
 syntax on " Syntax coloring - MUST come before highlight color
 
+" run :highlight to see options
 " use custom search highlight color
-hi Search cterm=NONE ctermfg=grey ctermbg=Magenta
-hi IncSearch cterm=NONE ctermfg=grey ctermbg=Red
+"hi Search cterm=NONE ctermfg=grey ctermbg=Magenta
+"hi IncSearch cterm=NONE ctermfg=grey ctermbg=Red
+hi IncSearch term=bold,reverse cterm=bold,reverse gui=bold,reverse
+hi Search term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
 
 "******* END OF Colors ***********
-
 
 set nowrap
 filetype plugin indent on
@@ -105,14 +117,25 @@ filetype plugin on
 " Ignore searches with ctrl+p
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
+set paste
+
 " Remove trailing white space on save.
-autocmd BufWritePre * :%s/\s\+$//e
+fun! StripTrailingWhiteSpace()
+  " don't strip on these filetypes
+  if &ft =~ 'markdown'
+    return
+  endif
+  %s/\s\+$//e
+endfun
+autocmd bufwritepre * :call StripTrailingWhiteSpace()
 
 " Autowrap for git commits.
 autocmd Filetype gitcommit setlocal spell textwidth=72
 
 let Tlist_Use_Right_Window=1 "Put taglist plugin on right side
 let Tlist_Compact_Format=1
+
+au Bufread,BufNewFile *.md set filetype=markdown
 
 " bufexplorer (plugin) config:
 "let g:bufExplorerShowRelativePath=1 " Show relative path
@@ -122,6 +145,12 @@ let g:bufExplorerSortBy='mru'
 let g:bufExplorerShowRelativePath=1
 let g:bufExplorerSplitOutPathName=0
 let g:bufExplorerShowDirectories=0
+
+" Fix vimdiff
+" https://stackoverflow.com/a/26789027
+if &diff == 'nodiff'
+    set shellcmdflag=-ic
+endif
 
 
 
@@ -137,14 +166,15 @@ let g:bufExplorerShowDirectories=0
 let maplocalleader = "\\"
 nnoremap <F1> :set number! wrap<CR>
 
-nnoremap <F2> :syntax sync fromstart<CR>
+nnoremap <F2> :syntax sync fromstart<CR><F2>
 "nnoremap <F3> :call NumberToggle()<CR>
 nnoremap <F4> :e %:p:h<CR>
 nnoremap + *N
 nnoremap <leader><leader> :sp<CR>gd
 
-nnoremap <leader>ev :split $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>rc :split $MYVIMRC<cr>
+nnoremap <leader>sr :source $MYVIMRC<cr>
+noremap <leader>p :r !pbpaste<cr>
 
 " Copy current buffer's file path to clipboard
 nnoremap <leader>fp :let @+ = expand("%:p")<cr>
@@ -168,7 +198,6 @@ let g:private_vimrc_path = fnamemodify(expand("$MYVIMRC"), ":p:h") . '/.vimrc-pr
 if filereadable(g:private_vimrc_path)
   execute 'source '. g:private_vimrc_path
 endif
-
 
 """ Experimental: """
 
@@ -281,3 +310,19 @@ if exists("+showtabline")
      set stal=2
      set tabline=%!MyTabLine()
 endif
+
+" python.vim overwrites tabstop and this overwrites that
+" see: https://github.com/vim/vim/issues/989#issuecomment-264565888
+let g:python_recommended_style = 0
+set paste " must be set before expandtab
+set expandtab tabstop=2 softtabstop=2 shiftwidth=2
+
+" Always show tab characters
+set listchars=tab:>-     " > is shown at the beginning, - throughout
+set list
+
+
+" save undo history even between vim sessions.
+" NOTE: you MUST manually create the directory
+set undofile
+set undodir=~/.vimundo/

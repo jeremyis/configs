@@ -99,11 +99,14 @@ function colorgrid( )
         printf "%03d" $six
         echo -en "   \033[38;5;$(echo $seven)m█ "
         printf "%03d" $seven
-
         iter=$[$iter+1]
         printf '\r\n'
     done
 }
+
+# Add to PATH.
+export PATH=$PATH:/Volumes/projects/connect/connect
+export PATH=$PATH:/Users/jeremyis/dev/mergepbx
 
 
 function config_ps1() {
@@ -129,3 +132,12 @@ function config_ps1() {
 }
 
 config_ps1
+
+export PATH=$PATH:/usr/local/sbin
+export PATH=$PATH:$GOPATH/bin
+
+export VENV=~/env
+
+# Python virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
+

@@ -6,15 +6,17 @@
 [core]
   editor = vim
   autocrlf = input
-	precomposeunicode = true
+  recomposeunicode = true
   excludesfile = /Users/jeremy_smith/.gitignore_global
-	sparseCheckout = true
+  parseCheckout = true
 
 [rerere]
 	enabled = true
 
 [push]
-	default = current
+  efault = current
+  excludesfile = ~/.gitignore
+  # Diff-so-fancy: https://github.com/stevemao/diff-so-fancy
 
 [alias]
   st = status -sb
@@ -30,6 +32,7 @@
   logf = log --follow
   logp = log -p
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
+  lol2 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold yellow)%d%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold white)%an%C(reset) %C(bold red)%s%C(reset) '
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
   lola2 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) %C(bold yellow)%d%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold white)%an%C(reset) %C(bold red)%s%C(reset) ' --all
   ls = ls-files
@@ -44,7 +47,6 @@
   sh = show
   mine = log --author='jeremy.smith' -n 5
   files = diff-tree --no-commit-id --name-only -r
-
 
 
 [color]
@@ -126,3 +128,6 @@
   trustExitCode = true
 [pager]
   status = true
+
+[mergetool "mergepbx"]
+    cmd = mergepbx "$BASE" "$LOCAL" "$REMOTE" -o "$MERGED"

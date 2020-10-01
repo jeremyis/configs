@@ -19,6 +19,7 @@ Plugin 'vim-scripts/taglist.vim' " For seeing file summary panel from tags
 Plugin 'solarnz/thrift.vim' " Syntax for thrift
 Plugin 'leafgarland/typescript-vim.git'
 Plugin 'w0rp/ale'
+Plugin 'mustache/vim-mustache-handlebars'
 
 " Colorscheme rejects:
 "Plugin 'changyuheng/color-scheme-holokai-for-vim'
@@ -56,7 +57,9 @@ set backspace=indent,eol,start
 set autoindent
 
 "******* Colors ***********
-set t_Co=256 " Weird vim screen color issue
+" I actually think it looks better in fewer colors *shrug*
+set t_Co=128
+" set t_Co=256 " Weird vim screen color issue
 
 " Indent guides. https://github.com/nathanaelkane/vim-indent-guides
 let indent_guides_auto_colors = 0
@@ -66,7 +69,6 @@ let indent_guides_color_change_percent = 10
 let indent_guides_guide_size = 2
 let g:indent_guides_enable_on_vim_startup = 1
 
-" 80 line character coloring - http://vimbits.com/bits/13
 if exists('+colorcolumn')
   set colorcolumn=100
 else
@@ -75,10 +77,12 @@ else
     au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
   augroup END
 endif
+highlight ColorColumn ctermbg=0 guibg=lightgrey
 
-colorscheme slate
 set background=dark
 syntax on " Syntax coloring - MUST come before highlight color
+colorscheme dracula
+color dracula
 
 " run :highlight to see options
 " use custom search highlight color
@@ -166,7 +170,7 @@ endif
 let maplocalleader = "\\"
 nnoremap <F1> :set number! wrap<CR>
 
-nnoremap <F2> :syntax sync fromstart<CR><F2>
+nnoremap <F2> :syntax sync fromstart<CR>
 "nnoremap <F3> :call NumberToggle()<CR>
 nnoremap <F4> :e %:p:h<CR>
 nnoremap + *N
@@ -326,3 +330,10 @@ set list
 " NOTE: you MUST manually create the directory
 set undofile
 set undodir=~/.vimundo/
+
+" NEVER allow tabs. Fuck tabs and the idiociy that allows
+" filetype plugins or other random shit to override this setting
+augroup expandtabFTW
+    autocmd!
+    autocmd FileType * setglobal expandtab
+augroup END

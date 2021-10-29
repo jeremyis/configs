@@ -2,11 +2,11 @@
 set -o vi
 
 # Aliases
-grepnodefn () { grep -rnIi "$1" * --color=always | grep -v node_modules; }
-findnodefn () { find . | grep -i "$1" --color=always | grep -v node_modules;}
+grepnodefn () { grep -rnIi --exclude-dir={node_modules,.git} "$1" * --color=always ; }
+findnodefn () { find . | grep -i "$1"  --exclude-dir={node_modules,.git} --color=always; }
 function grepr() { grep -rI "$1" * --color=always; }
-alias grepnode=grepnodefn
-alias findnode=findnodefn
+alias ngrep=grepnodefn
+alias nfind=findnodefn
 alias grepr=grepr
 
 greprubyfn () { grep -rIn --include \*.rb --color=always "$1" *; }
@@ -44,13 +44,13 @@ alias ll="ls -l"
 
 export PATH=$PATH:/usr/local/sbin
 
-# Added by GraphLab Create Launcher v3.0.1
-export PATH="/Users/jeremy_smith/anaconda/bin:$PATH"
-
 # Golang
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=/Users/jeremy_smith/go
 export GOBIN=$GOPATH/bin
+
+# Python
+export PATH=/Users/jeremyis/.local/bin:$PATH
 
 # So vi calls the correct vim (not necessarily /usr/bin/vim)
 #alias vi="vim"
@@ -61,6 +61,7 @@ function vi() {
         vim $@
     fi
 }
+
 
 # Fix terminal Ctrl-S / Ctrl-Q with VIM
 # http://stackoverflow.com/questions/13648237/ctrls-horizontal-split-not-working-with-command-t-in-vim
@@ -99,14 +100,11 @@ function colorgrid( )
         printf "%03d" $six
         echo -en "   \033[38;5;$(echo $seven)m█ "
         printf "%03d" $seven
+
         iter=$[$iter+1]
         printf '\r\n'
     done
 }
-
-# Add to PATH.
-export PATH=$PATH:/Volumes/projects/connect/connect
-export PATH=$PATH:/Users/jeremyis/dev/mergepbx
 
 
 function config_ps1() {
@@ -131,13 +129,21 @@ function config_ps1() {
   export PS1="$limegreen\t$reset $blue\h$reset:$red\w$reset $__user$promptcolor\$$reset "
 }
 
-config_ps1
+# config_ps1
+# see: https://bashrcgenerator.com/
+export PS1="\[\033[38;5;90m\]\[\033[48;5;231m\]\h\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;202m\]\T\[$(tput sgr0)\] \[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;56m\]\[\033[48;5;230m\]\w\[$(tput sgr0)\]:\n\[$(tput sgr0)\]\[\033[38;5;40m\]\\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
 
-export PATH=$PATH:/usr/local/sbin
-export PATH=$PATH:$GOPATH/bin
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export VENV=~/env
 
-# Python virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+
+
+
+
+
 

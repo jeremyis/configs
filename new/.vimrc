@@ -20,6 +20,9 @@ Plugin 'solarnz/thrift.vim' " Syntax for thrift
 Plugin 'leafgarland/typescript-vim.git'
 Plugin 'w0rp/ale'
 Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
 
 " Colorscheme rejects:
 "Plugin 'changyuheng/color-scheme-holokai-for-vim'
@@ -30,6 +33,10 @@ Plugin 'dracula/vim', { 'name': 'dracula' }
 " All of your Vundle Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" Plugin config
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_auto_extension_ext = 'md'
 
 set encoding=utf-8
 set paste " must be set before expandtab

@@ -9,6 +9,7 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
+Plugin 'chrisbra/csv.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'lchi/vim-toffee'
 Plugin 'groenewege/vim-less'

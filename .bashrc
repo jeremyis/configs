@@ -22,8 +22,15 @@ gitcleanupfn () { git checkout master  && git branch --merged | grep -v master |
 alias git-cleanup=gitcleanupfn
 
 # Requires core-utils brew install coreutils
-fullfilepathfn () { greadlink -f $1 | pbcopy; }
-alias fp=fullfilepathfn
+copypathfn() { greadlink -f $1 |  tr -d  '\n' |  pbcopy; }
+alias cfp=copypathfn
+
+
+## FFmpeg
+avprobefn () {  /Users/jeremyis/Dropbox/projects/recharm/scripts/avprobe.sh -f "$1" "$2"; }
+alias avprobe=avprobefn
+
+
 
 # Exports
 export NODE_ENV='development'
@@ -50,7 +57,7 @@ export GOPATH=/Users/jeremy_smith/go
 export GOBIN=$GOPATH/bin
 
 # Python
-export PATH=/Users/jeremyis/.local/bin:$PATH
+#export PATH=/Users/jeremyis/.local/bin:$PATH
 
 # So vi calls the correct vim (not necessarily /usr/bin/vim)
 #alias vi="vim"
@@ -73,7 +80,7 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 
 # http://unix.stackexchange.com/a/285956
-function colorgrid( )
+function colorgrid()
 {
     iter=16
     while [ $iter -lt 52 ]
@@ -131,19 +138,34 @@ function config_ps1() {
 
 # config_ps1
 # see: https://bashrcgenerator.com/
-export PS1="\[\033[38;5;90m\]\[\033[48;5;231m\]\h\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;202m\]\T\[$(tput sgr0)\] \[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;56m\]\[\033[48;5;230m\]\w\[$(tput sgr0)\]:\n\[$(tput sgr0)\]\[\033[38;5;40m\]\\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
+# export PS1="\[\033[38;5;90m\]\[\033[48;5;231m\]\h\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;202m\]\T\[$(tput sgr0)\] \[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;56m\]\[\033[48;5;230m\]\w\[$(tput sgr0)\]:\n\[$(tput sgr0)\]\[\033[38;5;40m\]\\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
+# Even this would cause wrapping issues on hitting the up key in tmux. ::shrug::
+#export PS1="\[\033[0;32m\]\\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
 
+# This claims this is OK https://unix.stackexchange.com/a/382562
+#export PS1="\[\e[36m\]\W $ \[\e[m\] "
+#export PS1='\w\$ ' # https://serverfault.com/a/83384
+
+
+# Node version manager = nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+#export PATH="$PATH:$HOME/.rvm/bin"
 
+#
+# Preserve history (in tmux https://askubuntu.com/a/339925)
+#
 
+# avoid duplicates..
+export HISTCONTROL=ignoredups:erasedups
 
+# append history entries..
+#shopt -s histappend
 
-
-
+# After each command, save and reload history
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 

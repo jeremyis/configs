@@ -169,3 +169,4 @@ export HISTCONTROL=ignoredups:erasedups
 # After each command, save and reload history
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
+export NODE_PATH=$NODE_PATH:`npm root -g`

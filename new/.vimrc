@@ -23,6 +23,7 @@ Plugin 'w0rp/ale'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'powerman/vim-plugin-AnsiEsc'
 
 
 " Colorscheme rejects:
@@ -345,3 +346,10 @@ augroup expandtabFTW
     autocmd!
     autocmd FileType * setglobal expandtab
 augroup END
+
+" Sensible Vimdiff color scheme
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+

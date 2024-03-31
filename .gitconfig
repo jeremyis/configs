@@ -41,6 +41,7 @@
   df = diff
   dw = diff --word-diff=color
   dc = diff --cached
+  dwc = diff --cached --word-diff=color
   lg = log --color --graph --pretty=format:'%Cred%h%Creset - %C(bold blue)<%an>%Creset %Cgreen(%cr) %C(yellow)%d%Creset %s %Cred(%ai) ' --abbrev-commit --
   lgf = log --follow
   logf = log --follow

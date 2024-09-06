@@ -366,3 +366,8 @@ set -g mouse on
 # "$@"
 # # /!\ do not remove the previous line
 
+# From ChatGPT to prevent snap-back on highlight
+# Disable tmux from exiting copy mode when you finish selecting:
+# Disable exit from copy-mode on mouse release to prevent scrolling to the bottom
+unbind -T copy-mode-vi MouseDragEnd1Pane
+bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-selection

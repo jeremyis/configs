@@ -30,7 +30,8 @@ alias cfp=copypathfn
 avprobefn () {  /Users/jeremyis/Dropbox/projects/recharm/scripts/avprobe.sh -f "$1" "$2"; }
 alias avprobe=avprobefn
 
-
+crawl_and_probe() { python3 /Users/jeremyis/Dropbox/projects/recharm/scripts/crawl_and_probe.py "$1";}
+alias crawlandprobe=crawl_and_probe
 
 # Exports
 export NODE_ENV='development'

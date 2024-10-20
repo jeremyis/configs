@@ -42,7 +42,6 @@ let g:vim_markdown_auto_extension_ext = 'md'
 
 set encoding=utf-8
 set paste " must be set before expandtab
-set expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd FileType python setlocal expandtab shiftwidth=2 softtabstop=2
 
 set number
@@ -67,16 +66,9 @@ set autoindent
 
 "******* Colors ***********
 " I actually think it looks better in fewer colors *shrug*
-set t_Co=128
+"set t_Co=128
 " set t_Co=256 " Weird vim screen color issue
 
-" Indent guides. https://github.com/nathanaelkane/vim-indent-guides
-let indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=darkgrey   ctermbg=236
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=lightgray  ctermbg=234
-let indent_guides_color_change_percent = 10
-let indent_guides_guide_size = 2
-let g:indent_guides_enable_on_vim_startup = 1
 
 if exists('+colorcolumn')
   set colorcolumn=100
@@ -88,10 +80,6 @@ else
 endif
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
-set background=dark
-syntax on " Syntax coloring - MUST come before highlight color
-colorscheme dracula
-color dracula
 
 " run :highlight to see options
 " use custom search highlight color
@@ -353,3 +341,21 @@ highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Re
 highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
 
+" Apply settings for all filetypes
+set expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType * setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+
+set termguicolors " Needed for 256 colors (i.e. in tmux
+
+syntax on " Syntax coloring - MUST come before highlight color
+colorscheme dracula
+color dracula
+set background=dark
+
+" Indent guides. https://github.com/nathanaelkane/vim-indent-guides
+let indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=grey19  ctermbg=236
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=grey23  ctermbg=238
+let indent_guides_color_change_percent = 10
+let indent_guides_guide_size = 2
+let g:indent_guides_enable_on_vim_startup = 1

@@ -62,7 +62,6 @@
   mine = log --author='jeremy.smith' -n 5
   files = diff-tree --no-commit-id --name-only -r
   prune-local = "!git fetch -p && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D"
-  tr-co = '!f() { git fetch && git checkout -b "$1" --track origin/"$1"; }; f'
 	trco = "!f() { git fetch && git checkout -b \"$1\" --track origin/\"$1\"; }; f"
 	newb = checkout -b
 	aliaslist = config --get-regexp '^alias\\.'

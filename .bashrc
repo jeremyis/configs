@@ -171,3 +171,5 @@ export HISTCONTROL=ignoredups:erasedups
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 export NODE_PATH=$NODE_PATH:`npm root -g`
+
+export PATH="/opt/homebrew/bin:$PATH"

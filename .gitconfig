@@ -63,11 +63,14 @@
   files = diff-tree --no-commit-id --name-only -r
   #prune-local = "!git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
   prune-local = "!f() { git fetch -p; branches=$(git branch -vv | awk '/: gone]/{print $1}'); if [ -n \"$branches\" ]; then echo \"Branches to be deleted:\"; echo \"$branches\"; echo -n \"Are you sure? (y/N): \"; read answer; if [ \"$answer\" = \"y\" ] || [ \"$answer\" = \"Y\" ]; then echo \"$branches\" | xargs git branch -D; else echo \"Cancelled.\"; fi; else echo \"No branches to prune.\"; fi; }; f"
+  track = "!f() { git checkout -b \"$1\" --track \"${2:-origin}/$1\"; }; f"
+
 
 
 	trco = "!f() { git fetch && git checkout -b \"$1\" --track origin/\"$1\"; }; f"
 	newb = checkout -b
 	aliaslist = config --get-regexp '^alias\\.'
+	br2 = "!f() { \\\n  email=$(git config user.email); \\\n  git for-each-ref refs/heads/ --sort=-committerdate --format=\"%(committeremail)|%(authorname)|%(refname:short)|%(HEAD)\" \\\n    | awk -F\"|\" -v me=\"$email\" \"\\\n      BEGIN { yours=\\\"\\\"; others=\\\"\\\" } \\\n      { \\\n        head=(\\$4==\\\"*\\\") ? \\\"* \\\" : \\\"  \\\"; \\\n        padded=sprintf(\\\"%-20s\\\", \\$2); \\\n        line=head padded \\\" \\\" \\$3; \\\n        if (tolower(\\$1) == tolower(me)) yours = yours line \\\"\\n\\\"; \\\n        else others = others line \\\"\\n\\\"; \\\n      } \\\n      END { printf \\\"%s%s\\\", yours, others }\"; \\\n}; f"
 
 
 

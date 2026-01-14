@@ -359,3 +359,13 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=grey23  ctermbg=238
 let indent_guides_color_change_percent = 10
 let indent_guides_guide_size = 2
 let g:indent_guides_enable_on_vim_startup = 1
+
+" format selected sql
+" requires pip install sqlparse
+vnoremap <Leader>sq :!sqlformat --reindent --keywords upper --identifiers lower -<CR>
+
+" Fixes crashes when running say the sqlformat command
+set shell=/bin/bash
+
+" Format SQL in the selected range (or any :range you give)
+command! -range=% SqlFormat <line1>,<line2>!sqlformat --reindent --keywords upper -

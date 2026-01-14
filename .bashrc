@@ -26,15 +26,11 @@ copypathfn() { greadlink -f $1 |  tr -d  '\n' |  pbcopy; }
 alias cfp=copypathfn
 
 
-## FFmpeg
-avprobefn () {  /Users/jeremyis/Dropbox/projects/recharm/scripts/avprobe.sh -f "$1" "$2"; }
-alias avprobe=avprobefn
-
-crawl_and_probe() { python3 /Users/jeremyis/Dropbox/projects/recharm/scripts/crawl_and_probe.py "$1";}
-alias crawlandprobe=crawl_and_probe
 
 # Exports
 export NODE_ENV='development'
+export NODE_OPTIONS="--max-old-space-size=8192" # tsc ran into a heap issue
+
 export PHP_ENV='development'
 export GREP_OPTIONS='--color=auto'
 
@@ -137,6 +133,12 @@ function config_ps1() {
   export PS1="$limegreen\t$reset $blue\h$reset:$red\w$reset $__user$promptcolor\$$reset "
 }
 
+# For ghostty error htop on ec2: "Error opening terminal: xterm-ghostty."
+# https://vninja.net/2024/12/28/ghostty-workaround-for-missing-or-unsuitable-terminal-xterm-ghostty/
+if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+    export TERM=xterm-256color
+fi
+
 # config_ps1
 # see: https://bashrcgenerator.com/
 # export PS1="\[\033[38;5;90m\]\[\033[48;5;231m\]\h\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;202m\]\T\[$(tput sgr0)\] \[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;56m\]\[\033[48;5;230m\]\w\[$(tput sgr0)\]:\n\[$(tput sgr0)\]\[\033[38;5;40m\]\\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
@@ -173,3 +175,5 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 export NODE_PATH=$NODE_PATH:`npm root -g`
 
 export PATH="/opt/homebrew/bin:$PATH"
+
+export LESS="-R --mouse"

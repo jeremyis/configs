@@ -150,10 +150,11 @@ fi
 #export PS1='\w\$ ' # https://serverfault.com/a/83384
 
 
+# Moved to zshrc because i always got the wrong node version
 # Node version manager = nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
@@ -177,3 +178,6 @@ export NODE_PATH=$NODE_PATH:`npm root -g`
 export PATH="/opt/homebrew/bin:$PATH"
 
 export LESS="-R --mouse"
+
+# Socket firewall to protect against bad npm installs
+alias npm="sfw npm"

@@ -28,6 +28,7 @@
 
 [rerere]
 	enabled = true
+	autoupdate = true
 
 [push]
 	default = current

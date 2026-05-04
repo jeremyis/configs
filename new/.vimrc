@@ -41,7 +41,9 @@ let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_auto_extension_ext = 'md'
 
 set encoding=utf-8
-set paste " must be set before expandtab
+" Toggle paste mode on demand (paste mode disables expandtab/autoindent/mappings,
+" so we never want it on by default — only when actually pasting raw text).
+set pastetoggle=<F3>
 autocmd FileType python setlocal expandtab shiftwidth=2 softtabstop=2
 
 set number
@@ -117,8 +119,6 @@ filetype plugin on
 
 " Ignore searches with ctrl+p
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-
-set paste
 
 " Remove trailing white space on save.
 fun! StripTrailingWhiteSpace()
@@ -315,7 +315,6 @@ endif
 " python.vim overwrites tabstop and this overwrites that
 " see: https://github.com/vim/vim/issues/989#issuecomment-264565888
 let g:python_recommended_style = 0
-set paste " must be set before expandtab
 set expandtab tabstop=2 softtabstop=2 shiftwidth=2
 
 " Always show tab characters

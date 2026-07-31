@@ -163,6 +163,101 @@ fi
 #
 # Preserve history (in tmux https://askubuntu.com/a/339925)
 #
+#
+
+# Helper for diffing chunks
+diffchunks_impl() {
+  local mode="${1:-vimdiff}"
+  local before_file="/tmp/diffchunks-before.txt"
+  local after_file="/tmp/diffchunks-after.txt"
+
+  echo "Copy first chunk, then press Enter"
+  read
+  pbpaste > "$before_file"
+
+  echo "Copy second chunk, then press Enter"
+  read
+  pbpaste > "$after_file"
+
+  case "$mode" in
+    vimdiff)
+      vimdiff "$before_file" "$after_file"
+      ;;
+    diff)
+      # Requires idiff  via `brew install icdiff`
+      icdiff --show-no-spaces "$before_file" "$after_file"
+      # Requires delta via `brew install git-delta`
+      #diff -u -w "$before_file" "$after_file" | delta --side-by-side --width="${DIFFCHUNKS_WIDTH:-160}"
+      #diff -u "$before_file" "$after_file"
+      ;;
+    *)
+      echo "Unknown mode: $mode"
+      echo "Usage: diffchunks_impl [vimdiff|diff]"
+      return 1
+      ;;
+  esac
+}
+alias diffchunks='diffchunks_impl diff'
+alias diffchunksvim='diffchunks_impl vimdiff'
+
+countframes() {
+  if [ "$#" -lt 1 ]; then
+    echo "Usage: countframes <file-or-url> [video-stream-number]" >&2
+    return 2
+  fi
+
+  local input="$1"
+  local stream="${2:-0}"
+
+  ffprobe -v error \
+    -select_streams "v:${stream}" \
+    -show_frames \
+    -show_entries frame=key_frame,pict_type \
+    -of compact=p=0:nk=0 \
+    "$input" |
+  awk -F'|' '
+    function print_count(label, value) {
+      printf "%-12s %8d  %6.2f%%\n",
+             label, value, total ? value * 100 / total : 0
+    }
+
+    {
+      type = ""
+      key = 0
+
+      for (i = 1; i <= NF; i++) {
+        if ($i ~ /^pict_type=/) {
+          split($i, value, "=")
+          type = value[2]
+        } else if ($i == "key_frame=1") {
+          key = 1
+        }
+      }
+
+      if (type != "") {
+        frames[type]++
+        total++
+      }
+
+      if (key)
+        keyframes++
+    }
+
+    END {
+      printf "%-12s %8d\n", "Total", total
+      printf "%-12s %8d\n\n", "Keyframes", keyframes
+
+      print_count("I-frames",  frames["I"])
+      print_count("P-frames",  frames["P"])
+      print_count("B-frames",  frames["B"])
+      print_count("S-frames",  frames["S"])
+      print_count("SI-frames", frames["SI"])
+      print_count("SP-frames", frames["SP"])
+      print_count("BI-frames", frames["BI"])
+      print_count("Unknown",   frames["?"])
+    }
+  '
+}
 
 # avoid duplicates..
 export HISTCONTROL=ignoredups:erasedups
@@ -181,3 +276,5 @@ export LESS="-R --mouse"
 
 # Socket firewall to protect against bad npm installs
 alias npm="sfw npm"
+
+

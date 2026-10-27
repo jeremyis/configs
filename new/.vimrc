@@ -24,6 +24,7 @@ Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'powerman/vim-plugin-AnsiEsc'
+Plugin 'neoclide/coc.nvim' " Node intellisense plugin
 
 
 " Colorscheme rejects:
@@ -220,6 +221,10 @@ nnoremap <leader>sm :e ~/.vims<cr>
 " See local buffer diffs
 nnoremap <leader>di :w !diff % -<cr>
 
+" Intellisense plugin (coc) go to definition
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+
 " Make vim interactive: http://stackoverflow.com/questions/4642822/commands-executed-from-vim-are-not-recognizing-bash-command-aliases
 set shellcmdflag=-ic
 
@@ -368,3 +373,6 @@ set shell=/bin/bash
 
 " Format SQL in the selected range (or any :range you give)
 command! -range=% SqlFormat <line1>,<line2>!sqlformat --reindent --keywords upper -
+
+" Auto render ANSI colors instead of garbage like: "^[[1m✓^[[22m^[[3""
+autocmd BufReadPost *.log AnsiEsc

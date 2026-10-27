@@ -63,8 +63,22 @@
   mine = log --author='jeremy.smith' -n 5
   files = diff-tree --no-commit-id --name-only -r
   #prune-local = "!git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
-  prune-local = "!f() { git fetch -p; branches=$(git branch -vv | awk '/: gone]/{print $1}'); if [ -n \"$branches\" ]; then echo \"Branches to be deleted:\"; echo \"$branches\"; echo -n \"Are you sure? (y/N): \"; read answer; if [ \"$answer\" = \"y\" ] || [ \"$answer\" = \"Y\" ]; then echo \"$branches\" | xargs git branch -D; else echo \"Cancelled.\"; fi; else echo \"No branches to prune.\"; fi; }; f"
   track = "!f() { git checkout -b \"$1\" --track \"${2:-origin}/$1\"; }; f"
+
+  # Lists the branches parents without visualization of other threads
+  parent = "!f() { head=$(git rev-parse \"${1:-HEAD}\"); \
+  git for-each-ref refs/heads --format='%(refname:short)' | \
+  while read -r br; do \
+    [ \"$(git rev-parse \"$br\")\" = \"$head\" ] && continue; \
+    mb=$(git merge-base \"$br\" \"$head\") || continue; \
+    [ \"$mb\" = \"$head\" ] && continue; \
+    echo \"$(git rev-list --count \"$mb..$head\") $br\"; \
+  done | sort -n | head -${2:-5}; }; f"
+
+  # For seeing what are the branches parents with visualization
+  lolb = "!f() { git log --graph --oneline --decorate \
+  --decorate-refs=refs/heads --simplify-by-decoration --boundary \
+  \"${2:-main}...${1:-HEAD}\"; }; f"
 
 
 
@@ -72,6 +86,7 @@
 	newb = checkout -b
 	aliaslist = config --get-regexp '^alias\\.'
 	br2 = "!f() { \\\n  email=$(git config user.email); \\\n  git for-each-ref refs/heads/ --sort=-committerdate --format=\"%(committeremail)|%(authorname)|%(refname:short)|%(HEAD)\" \\\n    | awk -F\"|\" -v me=\"$email\" \"\\\n      BEGIN { yours=\\\"\\\"; others=\\\"\\\" } \\\n      { \\\n        head=(\\$4==\\\"*\\\") ? \\\"* \\\" : \\\"  \\\"; \\\n        padded=sprintf(\\\"%-20s\\\", \\$2); \\\n        line=head padded \\\" \\\" \\$3; \\\n        if (tolower(\\$1) == tolower(me)) yours = yours line \\\"\\n\\\"; \\\n        else others = others line \\\"\\n\\\"; \\\n      } \\\n      END { printf \\\"%s%s\\\", yours, others }\"; \\\n}; f"
+	gone = !git branch -vv | grep \": gone]\" | awk \"{print \\$1}\" | grep -v \"^[*+]\" | xargs -r git branch -D
 
 
 
@@ -168,3 +183,5 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[fetch]
+	prune = true
